@@ -1,3 +1,10 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+# Modules #
+###########
 node_modules
 .cache
 .parcel-cache
