@@ -1,10 +1,13 @@
 import React from "react";
 import axios from "axios";
 
-import { LoginView } from "../login-view/login-view";
-import { RegistrationView } from "../registration-view/registration-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { RegistrationView } from "../registration-view/registration-view";
+
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export class MainView extends React.Component {
   constructor() {
@@ -18,16 +21,16 @@ export class MainView extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     axios.get("https://secure-coast-98530.herokuapp.com/movies")
-    .then(response => {
-      this.setState({
-        movies: response.data
+      .then(response => {
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
   }
 
   /* When a movie is clicked, this function is invoked and updates the state of the 'selectedMovie' *property to that movie */
@@ -62,19 +65,27 @@ export class MainView extends React.Component {
 
     // Before the movies have been loaded
     if (movies.length === 0) return <div className="main-view">Loading...</div>;
-    
+
     return (
-      <div className="main-view">
+      <Row className="main-view justify-content-md-center">
         {/* If the state of 'selectedMovie' is not null, that selected movie will be returned otherwise, all *movies will be returned */}
         {selectedMovie
-          ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { 
-              this.setSelectedMovie(newSelectedMovie); }}/>
+          ? (
+            <Col md={8}>
+              <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => {
+                this.setSelectedMovie(newSelectedMovie); }}
+              />
+            </Col>
+          )
           : movies.map(movie => (
-            <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { 
-              this.setSelectedMovie(newSelectedMovie) }}/> 
+            <Col md={3}>
+              <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => {
+                this.setSelectedMovie(newSelectedMovie); }}
+              />
+            </Col>
           ))
         }
-      </div>
+      </Row>
     );
-  }  
+  }
 }
