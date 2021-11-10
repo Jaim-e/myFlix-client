@@ -2,35 +2,18 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import "./login-view.scss";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
+//import "./login-view.scss";
 
 export function LoginView(props) {
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< Updated upstream
     console.log(username, password);
-    /* Send a request to the server for authentication */
-    /* then call props.onLoggedIn(username) */
-    props.onLoggedIn(username);
-  };
-
-  return (
-    <form>
-      <label className="username">
-        Username:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label className="password">
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <button className="loginBtn" type="submit" onClick={handleSubmit}>Submit</button>
-    </form>
-=======
-    /* Send a request to the server for authentication */
     /* Send a request to the server for authentication, then call props.onLoggedIn(username), which provides the username to our parent component (child to parent communication) */
     axios.post("YOUR_API_URL/login", {
       Username: username,
@@ -59,7 +42,6 @@ export function LoginView(props) {
 
       <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
     </Form>
->>>>>>> Stashed changes
   );
 }
 
