@@ -9,7 +9,25 @@ import "./index.scss";
 class MyFlixApplication extends React.Component {
   render() {
     return (
+<<<<<<< Updated upstream
       <MainView />
+=======
+      <>
+        <Navbar bg="dark" variant="dark" expand="sm">
+            <Navbar.Brand href="#home">MyFlix</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav>
+                <Nav.Link href="#profile">Profile</Nav.Link>
+                <Nav.Link href="#update">Update</Nav.Link>
+                <Nav.Link href="#logout">Logout</Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+        <br />
+        <MainView />
+      </>
+>>>>>>> Stashed changes
     );
   }
 }
