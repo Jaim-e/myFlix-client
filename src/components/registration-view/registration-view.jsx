@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import "./registration-view.scss";
+import { Container, Row, Col, CardGroup, Card, Form, Button } from "react-bootstrap";
+
+//import "./registration-view.scss";
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState("");
@@ -11,36 +13,64 @@ export function RegistrationView(props) {
 
   const handleSubmit = () => {
     e.preventDefault();
-    console.log(username, passsword, email, birthday);
+    console.log(username, password, email, birthdate);
     props.onRegistration(username);
   };
 
   return (
-    <form>
+    <Container>
+      <Row>
+        <Col>
+          <CardGroup>
+            <Card>
+              <Card.Title className="mb-3">Please Register</Card.Title>
+              <Form>
+                <Form.Group className="mb-3" controlId="formBasicUsername">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    required
+                    placeholder="Enter your username"
+                  />
+                </Form.Group>
 
-      <label className="username">
-        Username:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                    placeholder="Enter your password"
+                    minLength="8"
+                  />
+                </Form.Group>
 
-      <label className="password">
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
+                <Form.Group className="mb-4" controlId="formBasicEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                    placeholder="Enter your email"
+                  />
+                </Form.Group>
 
-      <label className="email">
-        E-mail:
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-      </label>
-
-      <label className="birthdate">
-        Birthdate:
-        <input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
-      </label>
-
-      <button className="registerBtn" type="submit" onClick={handleSubmit}>Register</button>
-
-    </form>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={handleSubmit}
+                >Submit
+                </Button>
+              </Form>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
