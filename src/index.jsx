@@ -14,10 +14,10 @@ import Nav from "react-bootstrap/Nav";
 class MyFlixApplication extends React.Component {
   render() {
     return (
-      <Container xs={12} md={8}>
+      <Container fluid xs={12} md={8}>
 
         <Navbar bg="dark" variant="dark" expand="sm">
-          <Container>
+          <Container fluid>
             <Navbar.Brand href="#home">MyFlix</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
