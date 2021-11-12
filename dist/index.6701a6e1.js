@@ -22869,13 +22869,13 @@ class MainView extends _reactDefault.default.Component {
         };
     }
     componentDidMount() {
-        _axiosDefault.default.get("https://secure-coast-98530.herokuapp.com/movies").then((response)=>{
+        let accessToken = localStorage.getItem("token");
+        if (accessToken !== null) {
             this.setState({
-                movies: response.data
+                user: localStorage.getItem("user")
             });
-        }).catch((error)=>{
-            console.log(error);
-        });
+            this.getMovies(accessToken);
+        }
     }
     /* When a movie is clicked, this function is invoked and updates the state of the 'selectedMovie' *property to that movie */ setSelectedMovie(movie) {
         this.setState({
@@ -22897,7 +22897,7 @@ class MainView extends _reactDefault.default.Component {
         this.getMovies(authData.token);
     }
     /* Get movies from API */ getMovies(token) {
-        _axiosDefault.default.get("YOUR_API_URL/movies", {
+        _axiosDefault.default.get("https://secure-coast-98530.herokuapp.com/movies", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -26241,7 +26241,7 @@ function LoginView(props) {
     const [password, setPassword] = _react.useState("");
     const handleSubmit = (e)=>{
         e.preventDefault();
-        /* Send a request to the server for authentication */ /* then call props.onLoggedIn(username), which provides hte username to our parent component (child to parent communication) */ _axiosDefault.default.post("YOUR_API_URL/login", {
+        /* Send a request to the server for authentication */ /* then call props.onLoggedIn(username), which provides hte username to our parent component (child to parent communication) */ _axiosDefault.default.post("https://secure-coast-98530.herokuapp.com/login", {
             Username: username,
             Password: password
         }).then((response)=>{
