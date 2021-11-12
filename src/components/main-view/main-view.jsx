@@ -22,15 +22,13 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("https://secure-coast-98530.herokuapp.com/movies")
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(error => {
-        console.log(error);
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user")
       });
+      this.getMovies(accessToken);
+    }
   }
 
   /* When a movie is clicked, this function is invoked and updates the state of the 'selectedMovie' *property to that movie */
@@ -53,6 +51,7 @@ export class MainView extends React.Component {
     this.setState({
       user: authData.user.Username
     });
+
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
     this.getMovies(authData.token);
@@ -60,18 +59,19 @@ export class MainView extends React.Component {
 
   /* Get movies from API */
   getMovies(token) {
-    axios.get("YOUR_API_URL/movies", {
-      headers: { Authorization: `Bearer ${token}`}
-    })
-    .then(response => {
-      // Assign the result to the state
-      this.setState({
-        movies: response.data
+    axios
+      .get("https://secure-coast-98530.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
 
 
