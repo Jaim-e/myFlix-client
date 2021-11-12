@@ -15,7 +15,7 @@ export function LoginView(props) {
     e.preventDefault();
     /* Send a request to the server for authentication */
     /* then call props.onLoggedIn(username), which provides hte username to our parent component (child to parent communication) */
-    axios.post("YOUR_API_URL/login", {
+    axios.post("https://secure-coast-98530.herokuapp.com/login", {
       Username: username,
       Password: password
     })
