@@ -22912,21 +22912,21 @@ class MainView extends _reactDefault.default.Component {
     }
     render() {
         const { movies , selectedMovie , user , register  } = this.state;
-        /* If there is not registered user, the RegistrationView is rendered. If there is a user registered, the user details are *passed as a prop to the LoginView */ if (!register) return(/*#__PURE__*/ _jsxRuntime.jsx(_registrationView.RegistrationView, {
-            onRegistration: (register1)=>this.onRegistration(register1)
-            ,
-            __source: {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 82
-            },
-            __self: this
-        }));
         /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView */ if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
             onLoggedIn: (user1)=>this.onLoggedIn(user1)
             ,
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 85
+                lineNumber: 81
+            },
+            __self: this
+        }));
+        /* If there is not registered user, the RegistrationView is rendered. If there is a user registered, the user details are *passed as a prop to the LoginView */ if (!register) return(/*#__PURE__*/ _jsxRuntime.jsx(_registrationView.RegistrationView, {
+            onRegistration: (register1)=>this.onRegistration(register1)
+            ,
+            __source: {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 84
             },
             __self: this
         }));
@@ -22935,7 +22935,7 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 88
+                lineNumber: 87
             },
             __self: this,
             children: "Loading..."
@@ -22944,14 +22944,14 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 91
+                lineNumber: 90
             },
             __self: this,
             children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                 md: 8,
                 __source: {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 95
+                    lineNumber: 94
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
@@ -22961,7 +22961,7 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 96
+                        lineNumber: 95
                     },
                     __self: this
                 })
@@ -22969,7 +22969,7 @@ class MainView extends _reactDefault.default.Component {
                     md: 3,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 102
+                        lineNumber: 101
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
@@ -22979,7 +22979,7 @@ class MainView extends _reactDefault.default.Component {
                         },
                         __source: {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 103
+                            lineNumber: 102
                         },
                         __self: this
                     }, movie._id)
