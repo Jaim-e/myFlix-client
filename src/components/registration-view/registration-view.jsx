@@ -66,11 +66,11 @@ export function RegistrationView(props) {
                 >Submit
                 </Button>
               </Form>
-            </Card>
-          </CardGroup>
-        </Col>
-      </Row>
-    </Container>
+              </Card>
+            </CardGroup>
+          </Col>
+        </Row>
+      </Container>
   );
 }
 

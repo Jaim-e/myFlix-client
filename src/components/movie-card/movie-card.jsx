@@ -7,10 +7,11 @@ import Card from "react-bootstrap/Card";
 export class MovieCard extends React.Component {
   render() {
     const { movie, onMovieClick } = this.props;
+    console.log(movie);
 
     return (
       <Card>
-        <Card.Img variant="top" src={movie.ImagePath} />
+        <Card.Img variant="top" src={new URL(movie.ImagePath)} crossOrigin="anonymous" />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
@@ -32,7 +33,7 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
       Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.instanceOf(Date)
+      Birth: PropTypes.string
     }),
     ImagePath: PropTypes.string.isRequired
   }).isRequired,
