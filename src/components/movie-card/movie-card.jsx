@@ -4,18 +4,22 @@ import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+import { Link } from "react-router-dom";
+
 export class MovieCard extends React.Component {
   render() {
-    const { movie, onMovieClick } = this.props;
+    const { movie } = this.props;
     console.log(movie);
 
     return (
       <Card>
-        <Card.Img variant="top" src={new URL(movie.ImagePath)} crossOrigin="anonymous" />
+        <Card.Img className="card-img" variant="top" src={new URL(movie.ImagePath)} crossOrigin="anonymous" />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
-          <Button onClick={() => onMovieClick(movie)} variant="link">Open</Button>
+          <Link to={`/movies/${movie._id}`}>
+            <Button variant="link">Open</Button>
+          </Link>
         </Card.Body>
       </Card>
     );
