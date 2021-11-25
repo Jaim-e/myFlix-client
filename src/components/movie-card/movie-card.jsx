@@ -9,11 +9,10 @@ import { Link } from "react-router-dom";
 export class MovieCard extends React.Component {
   render() {
     const { movie } = this.props;
-    console.log(movie);
 
     return (
       <Card>
-        <Card.Img className="card-img" variant="top" src={new URL(movie.ImagePath)} crossOrigin="anonymous" />
+        <Card.Img className="card-img" variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
