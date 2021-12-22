@@ -1,11 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { MainView } from "./components/main-view/main-view";
+import { Container, Navbar, Nav } from "react-bootstrap";
 
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import { MainView } from "./components/main-view/main-view";
 
 // Import statement to indicate that you need to bundle "./index.scss"
 /*import "./index.scss"; */
