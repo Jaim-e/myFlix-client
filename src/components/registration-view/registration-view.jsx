@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 import { Container, Row, Col, CardGroup, Card, Form, Button } from "react-bootstrap";
 
@@ -9,12 +10,26 @@ export function RegistrationView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [birthday, setBirthday] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password, email, birthdate);
-    props.onRegistration(username);
+    axios.post("https://secure-coast-98530.herokuapp.com/login", {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
+    })
+    .then(response => {
+      const data = response.data;
+      console.log(data);
+      window.open("/", "_self"); // the second argument "_self" is necessary so that the page will open in the current tab.
+    })
+    .catch(e => {
+      console.log("error registering the user")
+    });
+    //console.log(username, password, email, birthdate);
+    //props.onRegistration(username);
   };
 
   return (
@@ -79,7 +94,7 @@ RegistrationView.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    birthdate: PropTypes.string.isRequired,
+    birthday: PropTypes.string.isRequired,
   }),
-  onRegistration: PropTypes.func.isRequired
+  onRegistration: PropTypes.func,
 };
