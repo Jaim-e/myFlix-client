@@ -1,8 +1,6 @@
 import React from "react";
 
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import { Row, Col, Button } from "react-bootstrap";
 
 export class MovieView extends React.Component {
   render() {
@@ -28,7 +26,7 @@ export class MovieView extends React.Component {
           <div className="movie-genre">
             <span className="label">Genre: </span>
             <span className="value">{movie.Genre}</span>
-            <Link to={`/genres:${movie.Genre.Name}`}>
+            <Link to={`/genres/${movie.Genre.Name}`}>
               <Button variant="link">Genre</Button>
             </Link>
           </div>
@@ -36,7 +34,7 @@ export class MovieView extends React.Component {
           <div className="movie-director">
             <span className="label">Director: </span>
             <span className="value">{movie.Director}</span>
-            <Link to={`/directors:${movie.Director.Name}`}>
+            <Link to={`/directors/${movie.Director.Name}`}>
               <Button variant="link">Director</Button>
             </Link>
           </div>
