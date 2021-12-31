@@ -29,13 +29,12 @@ function FavoriteMovies({ favoriteMovieList }) {
             return (
               <Col xs={12} md={6} lg={3} key={_id} className="fav-movie">
                 <Figure>
-                <Link to={`/movies/${_id}`}>
-                  <Figure.Image src={ImagePath} alt={Title} />
-                  <Figure.Caption>
-                    {Title}
-                  </Figure.Caption>
-                </Link>
-
+                  <Link to={`/movies/${_id}`}>
+                    <Figure.Image src={ImagePath} alt={Title} />
+                    <Figure.Caption>
+                      {Title}
+                    </Figure.Caption>
+                  </Link>
                 </Figure>
                 <Button variant="secondary" onClick={() => removeFavorite(movies._id)}>Remove from list</Button>
               </Col>
