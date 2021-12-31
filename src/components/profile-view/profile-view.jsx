@@ -23,7 +23,7 @@ export class ProfileView extends React.Component {
     };
   }
 
-  const favoriteMovieList = movies.filter((movies) => {
+  favoriteMovieList = movies.filter((movies) => {
     return user.FavoriteMovies.includes(movies._id);
   });
 
