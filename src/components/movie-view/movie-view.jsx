@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+import { Link } from "react-router-dom";
 
 import { Row, Col, Button } from "react-bootstrap";
 
@@ -25,7 +28,7 @@ export class MovieView extends React.Component {
 
           <div className="movie-genre">
             <span className="label">Genre: </span>
-            <span className="value">{movie.Genre}</span>
+            {/*<span className="value">{movie.Genre}</span>*/}
             <Link to={`/genres/${movie.Genre.Name}`}>
               <Button variant="link">Genre</Button>
             </Link>
@@ -33,15 +36,32 @@ export class MovieView extends React.Component {
 
           <div className="movie-director">
             <span className="label">Director: </span>
-            <span className="value">{movie.Director}</span>
+            {/*<span className="value">{movie.Director}</span>*/}
             <Link to={`/directors/${movie.Director.Name}`}>
               <Button variant="link">Director</Button>
             </Link>
           </div>
 
-          <Button onClick={() => { onBackClick() }}>Back</Button>
+          <Button variant="dark" onClick={() => { onBackClick() }}>Back</Button>
         </Col>
       </Row>
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired,
+      Birthday: PropTypes.string
+    }),
+    ImagePath: PropTypes.string.isRequired
+  }).isRequired,
+};
