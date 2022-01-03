@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
+import { Container, Navbar, Nav, NavItem } from "react-bootstrap";
 
 import { MainView } from "./components/main-view/main-view";
 
@@ -20,7 +22,9 @@ class MyFlixApplication extends React.Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav>
-                <Nav.Link href="#profile">Profile</Nav.Link>
+                <Link to={`/users/${user}`}>
+                  <NavItem href="">Profile</NavItem>
+                </Link>
                 <Nav.Link href="#update">Update</Nav.Link>
                 <Nav.Link href="#logout">Logout</Nav.Link>
               </Nav>
