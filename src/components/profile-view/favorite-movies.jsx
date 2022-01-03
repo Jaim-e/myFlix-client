@@ -7,7 +7,7 @@ import {Card, Row, Col, Figure, Button} from "react-bootstrap";
 import "./profile-view.scss";
 
 function FavoriteMovies({ favoriteMovieList }) {
-  const removeFavorite = (id) => {
+  const removeFavoriteMovie = (id) => {
     let token = localStorage.getItem("token");
     let url = `https://secure-coast-98530.herokuapp.com/users/${localStorage.getItem("user")}/movies/${id}`;
     axios.delete(url, {
