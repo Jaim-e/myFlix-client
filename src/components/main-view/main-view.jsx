@@ -78,6 +78,7 @@ export class MainView extends React.Component {
     return (
       <Router>
         <Row className="main-view justify-content-md-center"> 
+          {/* LOGIN or MAIN */}
           <Route exact path="/" render={() => {
             /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView */
             console.log("jshdfvkjdsfbv");
@@ -96,6 +97,7 @@ export class MainView extends React.Component {
             ))
           }} />
 
+          {/* REGISTRATION */}
           <Route path="/register" render={() => {
             if (user) 
               return <Redirect to="/" />;
