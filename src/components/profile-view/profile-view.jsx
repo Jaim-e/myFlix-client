@@ -15,11 +15,11 @@ export class ProfileView extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: null,
-      password: null,
-      email: null,
-      birthday: null,
-      favorites: [],
+      Username: null,
+      Password: null,
+      Email: null,
+      Birthday: null,
+      FavoritesMovies: [],
     };
   }
 
@@ -32,6 +32,16 @@ export class ProfileView extends React.Component {
     if (accessToken !== null) {
       this.getUser(accessToken);
     }
+  }
+
+  updateDetails(details) {
+    this.setState({
+      Username: details.Username,
+      Password: "", // Always clear password field after updates
+      Email: details.Email,
+      Birthday: details.Birthday.slice(0, 10),
+      FavoriteMovies: details.FavoriteMovies
+    });
   }
 
   getUser(token) {
@@ -73,44 +83,38 @@ export class ProfileView extends React.Component {
 
   handleUpdate(e) {
     e.preventDefault();
-    const username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+    const username = localStorage.getItem("user");
 
     axios
       .put("https://secure-coast-98530.herokuapp.com/users/${username}", {
-        username: this.state.Username,
-        password: this.state.Password,
-        email: this.state.Email,
-        birthday: this.state.Birthday
+        Username: this.state.Username,
+        Password: this.state.Password,
+        Email: this.state.Email,
+        Birthday: this.state.Birthday
       }, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
-        this.setState({
-          username: response.data.Username,
-          password: response.data.Password,
-          email: response.data.Email,
-          birthday: response.data.Birthday,
-        });
-        localStorage.setItem("user", response.data.Username);
-        const data = response.data;
-        console.log(data);
+        alert("Changes saved");
+        this.updateDetails(response.data);
+        localStorage.setItem("user", this.state.Username);
         console.log(this.state.Username);
         alert("Profile updated");
         window.location.reload();
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
   }
 
-  removeFavorite() {
-    const username = localStorage.getItem("user");
+  removeFavoriteMovie() {
     const token = localStorage.getItem("token");
+    const username = localStorage.getItem("user");
 
     axios
     .delete("https://secure-coast-98530.herokuapp.com/users/${username}/movies/${movie._id}", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
     .then(response => {
       console.log(response);
@@ -122,15 +126,15 @@ export class ProfileView extends React.Component {
     })
   }
 
-  deleteUser() {
+  handleDeleteUser() {
     const answer = windows.confirm("Delete your account?");
     if (answer) {
-      const username = localStorage.getItem("user");
       const token = localStorage.getItem("token");
-  
+      const username = localStorage.getItem("user");
+
       axios
       .delete("https://secure-coast-98530.herokuapp.com/users/${username}", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         console.log(response);
@@ -141,7 +145,7 @@ export class ProfileView extends React.Component {
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
     }
   }
 
@@ -162,7 +166,7 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { username, email, birthday, favorites } = this.props;
+    const { Username, Email, Birthday, FavoriteMovies } = this.props;
     console.log(this.props)
 
     /*
@@ -176,8 +180,8 @@ export class ProfileView extends React.Component {
     */
 
     return (
-      <Container>
-        <Row>
+      <Container className="profile-view">
+        <Row className="justify-content-md-center">
 
           <Col xs={12} sm={4}>
             <Card>
@@ -203,12 +207,11 @@ export class ProfileView extends React.Component {
   }
 }
 
-
-  /*    <Container className="profile-view">
-        <Row className="justify-content-md-center">
-          <Col>
-          
-          </Col>
-        </Row>
-      </Container>
-  */
+ProfileView.propTypes = {
+  username: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthdate: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.array.isRequired,
+  }),
+};
