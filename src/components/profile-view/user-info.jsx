@@ -1,12 +1,16 @@
 import React from "react";
 
+import { Container } from "react-bootstrap";
+
+
 function UserInfo({ name, email }) {
   return (
-    <>
-    <h4>Your info</h4>
-    <p>Name: {name}</p>
-    <p>e-mail: {email}</p>
-    </>
+    <Container>
+      <h3>Your Info</h3>
+      <br />
+      <p><b>Username: </b>{name}</p>
+      <p><b>E-mail: </b>{email}</p>
+    </Container>
   )
 }
 
