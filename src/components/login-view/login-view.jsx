@@ -24,6 +24,7 @@ export function LoginView(props) {
     })
     .catch(e => {
       console.log("no such user");
+      alert("No valid username or password!")
     });
   };
 
@@ -33,10 +34,10 @@ export function LoginView(props) {
       <Col xs={12} sm={10} md={8} lg={6}>
         <CardGroup>
           <Card>
-            <Card.Title className="mb-3">Please Login</Card.Title>
+            <Card.Title className="mb-3"><h3>Please Login</h3></Card.Title>
             <Form>
               <Form.Group controlId="formUsername">
-                <Form.Label>Username:</Form.Label>
+                <Form.Label><b>Username:</b></Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter username"
@@ -45,14 +46,14 @@ export function LoginView(props) {
               </Form.Group>
 
               <Form.Group controlId="formPassword">
-                <Form.Label>Password:</Form.Label>
+                <Form.Label><b>Password:</b></Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Enter password"
                   value={password}
                   onChange={e => setPassword(e.target.value)} />
               </Form.Group>
-
+              <br />
               <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
             </Form>
             </Card>
