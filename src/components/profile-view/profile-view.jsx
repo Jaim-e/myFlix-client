@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
-
 import UserInfo from "./user-info";
-import FavoriteMovies from "./favorite-movies";
+import FavoriteMoviesComponent from "./favorite-movies";
 import UpdateUser from "./update-user";
 
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 
 export class ProfileView extends React.Component {
@@ -19,13 +17,9 @@ export class ProfileView extends React.Component {
       Password: null,
       Email: null,
       Birthday: null,
-      FavoritesMovies: [],
+      FavoriteMovies: [],
     };
   }
-
-  favoriteMovieList = movies.filter((movies) => {
-    return user.FavoriteMovies.includes(movies._id);
-  });
 
   componentDidMount() {
     const accessToken = localStorage.getItem("token");
@@ -39,7 +33,7 @@ export class ProfileView extends React.Component {
       Username: details.Username,
       Password: "", // Always clear password field after updates
       Email: details.Email,
-      Birthday: details.Birthday.slice(0, 10),
+      //Birthday: details.Birthday.slice(0, 10),
       FavoriteMovies: details.FavoriteMovies
     });
   }
@@ -47,16 +41,17 @@ export class ProfileView extends React.Component {
   getUser(token) {
     const username = localStorage.getItem("user");
     axios
-      .get("https://secure-coast-98530.herokuapp.com/users/${username}", {
+      .get(`https://secure-coast-98530.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
+        console.log(">Testing console<", response);
         this.setState({
-          username: response.data.Username,
-          password: response.data.Password,
-          email: response.data.Email,
-          birthday: response.data.Birthday,
-          favorites: response.data.Favorites,
+          Username: response.data.Username,
+          Password: response.data.Password,
+          Email: response.data.Email,
+          Birthday: response.data.Birthday,
+          FavoriteMovies: response.data.FavoriteMovies,
         });
       })
       .catch(function (error) {
@@ -68,7 +63,7 @@ export class ProfileView extends React.Component {
     e.preventDefault();
     /* Send a request to the server for authentication */
     /* then call props.onLoggedIn(data), which provides the username to our parent component (child to parent communication) */
-    axios.post("https://secure-coast-98530.herokuapp.com/login", {
+    axios.post(`https://secure-coast-98530.herokuapp.com/login`, {
       Username: username,
       Password: password
     })
@@ -87,25 +82,40 @@ export class ProfileView extends React.Component {
     const username = localStorage.getItem("user");
 
     axios
-      .put("https://secure-coast-98530.herokuapp.com/users/${username}", {
+      .put(`https://secure-coast-98530.herokuapp.com/users/${username}`, {
         Username: this.state.Username,
         Password: this.state.Password,
         Email: this.state.Email,
-        Birthday: this.state.Birthday
       }, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
-        alert("Changes saved");
+        alert("Profile updated");
         this.updateDetails(response.data);
         localStorage.setItem("user", this.state.Username);
         console.log(this.state.Username);
-        alert("Profile updated");
-        window.location.reload();
+        console.log(this.state.Password);
+        window.open(`/users/${username}`, "_self");
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  setUsername(value) {
+    this.state.Username = value;
+  }
+
+  setPassword(value) {
+    this.state.Password = value;
+  }
+
+  setEmail(value) {
+    this.state.Email = value;
+  }
+
+  setBirthday(value) {
+    this.state.Birthday = value;
   }
 
   removeFavoriteMovie() {
@@ -113,7 +123,7 @@ export class ProfileView extends React.Component {
     const username = localStorage.getItem("user");
 
     axios
-    .delete("https://secure-coast-98530.herokuapp.com/users/${username}/movies/${movie._id}", {
+    .delete(`https://secure-coast-98530.herokuapp.com/users/${username}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(response => {
@@ -133,7 +143,7 @@ export class ProfileView extends React.Component {
       const username = localStorage.getItem("user");
 
       axios
-      .delete("https://secure-coast-98530.herokuapp.com/users/${username}", {
+      .delete(`https://secure-coast-98530.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
@@ -149,69 +159,50 @@ export class ProfileView extends React.Component {
     }
   }
 
-  setUsername(value) {
-    this.state.Username = value;
-  }
-
-  setPassword(value) {
-    this.state.Password = value;
-  }
-
-  setEmail(value) {
-    this.state.Email = value;
-  }
-
-  setBirthday(value) {
-    this.state.Birthday = value;
-  }
-
   render() {
-    const { Username, Email, Birthday, FavoriteMovies } = this.props;
-    console.log(this.props)
-
-    /*
-    useEffect(() => {
-      let isMounted = true;
-      isMounted && getUser();
-      return () => {
-        isMounted = false;
-      }
-    }, [])
-    */
+    const { Username, Email, FavoriteMovies} = this.state;
+    const favoriteMovieList = this.props.movies.filter((movie) => {
+      return FavoriteMovies.includes(movie._id);
+    });
 
     return (
       <Container className="profile-view">
-        <Row className="justify-content-md-center">
 
+        <Row className="justify-content-md-center">
           <Col xs={12} sm={4}>
             <Card>
               <Card.Body>
-                <UserInfo name={user.Username} email={user.Email} />
+                <UserInfo name={Username} email={Email} />
               </Card.Body>
             </Card>
           </Col>
-
           <Col xs={12} sm={8}>
             <Card>
               <Card.Body>
-                <UpdateUser user={user} setUser={setUser} />
+                <UpdateUser user={this.state} handleSubmit={this.handleSubmit} handleUpdate={this.handleUpdate} />
               </Card.Body>
             </Card>
           </Col>
-
         </Row>
+
+        <br />
         
-        <FavoriteMovies favoriteMovieList={favoriteMovieList} />
+        <Row>
+          <Col>
+            <Card>
+              <FavoriteMoviesComponent favoriteMovieList={favoriteMovieList} />
+            </Card>
+          </Col>
+        </Row>
+
+        
       </Container>
     )
   }
 }
 
 ProfileView.propTypes = {
-  username: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthdate: PropTypes.string.isRequired,
-    FavoriteMovies: PropTypes.array.isRequired,
-  }),
+  movies: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string
+  }))
 };
