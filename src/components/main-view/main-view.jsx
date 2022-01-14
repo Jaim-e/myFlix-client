@@ -1,14 +1,17 @@
 import React from "react";
 import axios from "axios";
 
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
 
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { RegistrationView } from "../registration-view/registration-view";
+import { GenreView } from "../genre-view/genre-view";
+import { DirectorView } from "../director-view/director-view";
+import { ProfileView } from "../profile-view/profile-view";
 
-import { Row, Col, Button } from "react-bootstrap";
+import { Container, Navbar, Nav, Row, Col, Button } from "react-bootstrap";
 
 export class MainView extends React.Component {
 
@@ -23,11 +26,13 @@ export class MainView extends React.Component {
 
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
+    console.log("dfghdr", accessToken)
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem("user")
-      });
+      }, () => console.log("updated state", this.state));
       this.getMovies(accessToken);
+      console.log("zzzzzzzz");
     }
   }
 
@@ -77,11 +82,27 @@ export class MainView extends React.Component {
     /* Before the movies have been loaded */
     return (
       <Router>
-        <Row className="main-view justify-content-md-center"> 
+        <Navbar bg="dark" variant="dark" expand="sm">
+          <Container fluid>
+            <Navbar.Brand href="/"><h1>MyFlix</h1></Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
+            {user && (
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                  <Nav.Link as={Link} to={`/users/${user}`} target='_self'>Profile</Nav.Link>
+                </Nav>
+                <Col>
+                  <Button variant="secondary" onClick={() => { this.onLoggedOut() }}>Logout</Button>
+                </Col>
+              </Navbar.Collapse>
+            )}
+          </Container>
+        </Navbar>
+
+        <Row className="main-view justify-content-md-center">
           {/* LOGIN or MAIN */}
           <Route exact path="/" render={() => {
             /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView */
-            console.log("jshdfvkjdsfbv");
             if (!user) 
               return (
                 <Col>
@@ -107,6 +128,20 @@ export class MainView extends React.Component {
               </Col>
             )
           }} />
+
+          {/* PROFILE */}
+          <Route path="/users/:username" render={({ history }) => {
+            console.log(">Testing console<", user)
+            if (!user)
+              return <Redirect to="/" />
+              console.log(">Testing console<");
+            return (
+              <Col>
+                <ProfileView movies={movies} />
+              </Col>
+            )
+          }} />
+
 
           {/* MOVIES */}
           <Route path="/movies/:movieId" render={({ match, history }) => {
@@ -158,21 +193,6 @@ export class MainView extends React.Component {
               </Col>
             )  
           }} />
-
-          {/* ProfileView */}
-          <Route path={"/users/${user}"} render={({history}) => {
-            if (!user)
-              return <Redirect to="/" />
-            return (
-              <Col>
-                <ProfileView user={user} onBackClick={() => history.goBack()}/>
-              </Col>
-            )
-          }} />
-
-          <Col>
-            <Button variant="warning" onClick={() => { this.onLoggedOut() }}>Logout</Button>
-          </Col>
         </Row>
       </Router>
     );
