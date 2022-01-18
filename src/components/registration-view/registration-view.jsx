@@ -10,11 +10,12 @@ export function RegistrationView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [birth, setBirth] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://secure-coast-98530.herokuapp.com/login", {
+    axios
+    .post(`https://secure-coast-98530.herokuapp.com/register`, {
       Username: username,
       Password: password,
       Email: email,
@@ -26,7 +27,8 @@ export function RegistrationView(props) {
       window.open("/", "_self"); // the second argument "_self" is necessary so that the page will open in the current tab.
     })
     .catch(e => {
-      console.log("error registering the user")
+      console.log(">error registering the user<");
+      window.open("Error registering the user!");
     });
     //console.log(username, password, email, birthdate);
     //props.onRegistration(username);
@@ -38,10 +40,11 @@ export function RegistrationView(props) {
         <Col xs={12} sm={10} md={8} lg={6}>
           <CardGroup>
             <Card>
-              <Card.Title className="mb-3">Please Register</Card.Title>
+              <Card.Title className="mb-3"><h3>Please Register</h3></Card.Title>
               <Form>
+
                 <Form.Group className="mb-3" controlId="formBasicUsername">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label><b>Username</b></Form.Label>
                   <Form.Control
                     type="text"
                     value={username}
@@ -52,7 +55,7 @@ export function RegistrationView(props) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label><b>Password</b></Form.Label>
                   <Form.Control
                     type="password"
                     value={password}
@@ -63,8 +66,8 @@ export function RegistrationView(props) {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label>Email</Form.Label>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label><b>Email</b></Form.Label>
                   <Form.Control
                     type="email"
                     value={email}
@@ -74,18 +77,30 @@ export function RegistrationView(props) {
                   />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="formBasicBirthDate">
+                  <Form.Label><b>Birthday</b></Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={birth}
+                    onChange={e => setBirth(e.target.value)}
+                    required
+                    placeholder="Enter your birth date"
+                  />
+                </Form.Group>
+
                 <Button
                   variant="primary"
                   type="submit"
                   onClick={handleSubmit}
                 >Submit
                 </Button>
+
               </Form>
-              </Card>
-            </CardGroup>
-          </Col>
-        </Row>
-      </Container>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
@@ -94,7 +109,7 @@ RegistrationView.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    birthday: PropTypes.string.isRequired,
+    birth: PropTypes.string.isRequired,
   }),
   onRegistration: PropTypes.func,
 };
