@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import {Container, Card, Row, Col, Figure, Button} from "react-bootstrap";
+import { Card, Row, Col, Figure, Button } from "react-bootstrap";
 
 //import "./profile-view.scss";
 
