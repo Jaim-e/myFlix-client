@@ -14,7 +14,8 @@ export function LoginView(props) {
     e.preventDefault();
     /* Send a request to the server for authentication */
     /* then call props.onLoggedIn(data), which provides the username to our parent component (child to parent communication) */
-    axios.post("https://secure-coast-98530.herokuapp.com/login", {
+    axios.
+    post(`https://secure-coast-98530.herokuapp.com/login`, {
       Username: username,
       Password: password
     })
@@ -37,7 +38,7 @@ export function LoginView(props) {
             <Card.Title className="mb-3"><h3>Please Login</h3></Card.Title>
             <Form>
               <Form.Group controlId="formUsername">
-                <Form.Label><b>Username:</b></Form.Label>
+                <Form.Label><b>Username</b></Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter username"
@@ -46,7 +47,7 @@ export function LoginView(props) {
               </Form.Group>
 
               <Form.Group controlId="formPassword">
-                <Form.Label><b>Password:</b></Form.Label>
+                <Form.Label><b>Password</b></Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Enter password"
