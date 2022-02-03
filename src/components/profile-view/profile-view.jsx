@@ -16,7 +16,7 @@ export class ProfileView extends React.Component {
       Username: null,
       Password: null,
       Email: null,
-      Birthday: null,
+      Birthdate: null,
       FavoriteMovies: [],
     };
   }
@@ -33,7 +33,7 @@ export class ProfileView extends React.Component {
       Username: details.Username,
       Password: "", // Always clear password field after updates
       Email: details.Email,
-      //Birthday: details.Birthday.slice(0, 10),
+      //Birthdate: details.Birthdate.slice(0, 10),
       FavoriteMovies: details.FavoriteMovies
     });
   }
@@ -50,7 +50,7 @@ export class ProfileView extends React.Component {
           Username: response.data.Username,
           Password: response.data.Password,
           Email: response.data.Email,
-          Birthday: response.data.Birthday,
+          Birthdate: response.data.Birthdate,
           FavoriteMovies: response.data.FavoriteMovies,
         });
       })
@@ -86,6 +86,7 @@ export class ProfileView extends React.Component {
         Username: this.state.Username,
         Password: this.state.Password,
         Email: this.state.Email,
+        Birthdate: this.state.Birthdate
       }, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -114,8 +115,8 @@ export class ProfileView extends React.Component {
     this.state.Email = value;
   }
 
-  setBirthday(value) {
-    this.state.Birthday = value;
+  setBirthdate(value) {
+    this.state.Birthdate = value;
   }
 
   removeFavoriteMovie() {
