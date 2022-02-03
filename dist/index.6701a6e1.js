@@ -22774,7 +22774,7 @@ class MainView extends _reactDefault.default.Component {
     }
     componentDidMount() {
         let accessToken = localStorage.getItem("token");
-        console.log("dfghdr", accessToken);
+        console.log(">Testing console<", accessToken);
         if (accessToken !== null) {
             this.setState({
                 user: localStorage.getItem("user")
@@ -22785,7 +22785,7 @@ class MainView extends _reactDefault.default.Component {
         }
     }
     /* Get movies from API */ getMovies(token) {
-        _axiosDefault.default.get("https://secure-coast-98530.herokuapp.com/movies", {
+        _axiosDefault.default.get(`https://secure-coast-98530.herokuapp.com/movies`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -22913,6 +22913,32 @@ class MainView extends _reactDefault.default.Component {
                                         })
                                     })
                                 ]
+                            }),
+                            !user && /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Navbar.Collapse, {
+                                id: "basic-navbar-nav",
+                                __source: {
+                                    fileName: "src/components/main-view/main-view.jsx",
+                                    lineNumber: 100
+                                },
+                                __self: this,
+                                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav, {
+                                    __source: {
+                                        fileName: "src/components/main-view/main-view.jsx",
+                                        lineNumber: 101
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
+                                        as: _reactRouterDom.Link,
+                                        to: `/register`,
+                                        target: "_self",
+                                        __source: {
+                                            fileName: "src/components/main-view/main-view.jsx",
+                                            lineNumber: 102
+                                        },
+                                        __self: this,
+                                        children: "Registration"
+                                    })
+                                })
                             })
                         ]
                     })
@@ -22921,7 +22947,7 @@ class MainView extends _reactDefault.default.Component {
                     className: "main-view justify-content-md-center",
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 102
+                        lineNumber: 109
                     },
                     __self: this,
                     children: [
@@ -22948,7 +22974,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 104
+                                lineNumber: 111
                             },
                             __self: this
                         }),
@@ -22965,7 +22991,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 122
+                                lineNumber: 129
                             },
                             __self: this
                         }),
@@ -22985,7 +23011,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 133
+                                lineNumber: 140
                             },
                             __self: this
                         }),
@@ -23011,7 +23037,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 147
+                                lineNumber: 154
                             },
                             __self: this
                         }),
@@ -23037,7 +23063,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 164
+                                lineNumber: 171
                             },
                             __self: this
                         }),
@@ -23063,7 +23089,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 181
+                                lineNumber: 188
                             },
                             __self: this
                         })
