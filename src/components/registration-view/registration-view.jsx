@@ -10,20 +10,21 @@ export function RegistrationView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birthdate, setBirthdate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-    .post(`https://secure-coast-98530.herokuapp.com/register`, {
+    .post(`https://secure-coast-98530.herokuapp.com/users`, {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday
+      Birthdate: birthdate
     })
     .then(response => {
       const data = response.data;
       console.log(data);
+      alert("Registration successful! Please Login");
       window.open("/", "_self"); // the second argument "_self" is necessary so that the page will open in the current tab.
     })
     .catch(e => {
@@ -78,13 +79,13 @@ export function RegistrationView(props) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicBirthDate">
-                  <Form.Label><b>Birthday</b></Form.Label>
+                  <Form.Label><b>Birthdate</b></Form.Label>
                   <Form.Control
                     type="date"
-                    value={birth}
-                    onChange={e => setBirth(e.target.value)}
+                    value={birthdate}
+                    onChange={e => setBirthdate(e.target.value)}
                     required
-                    placeholder="Enter your birth date"
+                    placeholder="Enter your birthdate"
                   />
                 </Form.Group>
 
@@ -109,7 +110,7 @@ RegistrationView.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    birth: PropTypes.string.isRequired,
+    birthdate: PropTypes.string.isRequired,
   }),
   onRegistration: PropTypes.func,
 };
