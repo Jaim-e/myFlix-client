@@ -26,7 +26,7 @@ export class MainView extends React.Component {
 
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
-    console.log("dfghdr", accessToken)
+    console.log(">Testing console<", accessToken)
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem("user")
@@ -39,7 +39,7 @@ export class MainView extends React.Component {
   /* Get movies from API */
   getMovies(token) {
     axios
-      .get("https://secure-coast-98530.herokuapp.com/movies", {
+      .get(`https://secure-coast-98530.herokuapp.com/movies`, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       })
       .then(response => {
@@ -94,6 +94,13 @@ export class MainView extends React.Component {
                 <Col>
                   <Button variant="secondary" onClick={() => { this.onLoggedOut() }}>Logout</Button>
                 </Col>
+              </Navbar.Collapse>
+            )}
+            {!user && (
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                  <Nav.Link as={Link} to={`/register`} target='_self'>Registration</Nav.Link>
+                </Nav>
               </Navbar.Collapse>
             )}
           </Container>
