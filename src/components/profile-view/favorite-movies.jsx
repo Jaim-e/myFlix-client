@@ -1,13 +1,15 @@
 import React from "react";
-
-import { Link } from "react-router-dom";
+import axios from "axios";
 
 import { Card, Row, Col, Figure, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
+
 
 //import "./profile-view.scss";
 
 function FavoriteMovies({ favoriteMovieList }) {
-  const removeFavoriteMovie = (id) => {
+  const removeFromFavorites = (id) => {
     let token = localStorage.getItem("token");
     let url = `https://secure-coast-98530.herokuapp.com/users/${localStorage.getItem("user")}/movies/${id}`;
     axios.delete(url, {
@@ -31,11 +33,11 @@ function FavoriteMovies({ favoriteMovieList }) {
               <Col xs={12} md={6} lg={3} key={_id} className="fav-movie">
                 <Figure>
                   <Link to={`/movies/${_id}`}>
-                    <Figure.Image src={ImagePath} alt={Title} />s
+                    <Figure.Image alt={Title} src={ImagePath} crossOrigin="anonymous" />
                     <Figure.Caption><h5>{Title}</h5></Figure.Caption>
                   </Link>
                 </Figure>
-                <Button variant="danger" onClick={() => removeFavoriteMovie(movies._id)}>Remove from favorites</Button>
+                <Button variant="outline-danger" onClick={() => removeFromFavorites(_id)}>Remove from Favorites</Button>
               </Col>
             )
           })}
