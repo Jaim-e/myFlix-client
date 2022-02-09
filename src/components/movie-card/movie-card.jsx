@@ -14,8 +14,10 @@ export class MovieCard extends React.Component {
       <Card>
         <Card.Img className="card-img" variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
         <Card.Body>
-          <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text>{movie.Description}</Card.Text>
+          <Card.Title>
+            <h1>{movie.Title}</h1>
+          </Card.Title>
+         {/* <Card.Text>{movie.Description}</Card.Text> */}
           <Link to={`/movies/${movie._id}`}>
             <Button variant="info">See more</Button>
           </Link>
@@ -28,16 +30,6 @@ export class MovieCard extends React.Component {
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-    }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Bio: PropTypes.string.isRequired,
-      Birthdate: PropTypes.string
-    }),
     ImagePath: PropTypes.string.isRequired
   }).isRequired,
 };
