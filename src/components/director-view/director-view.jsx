@@ -7,17 +7,19 @@ import { Link } from "react-router-dom";
 
 export class DirectorView extends React.Component {
   render() {
-    const { director} = this.props;
+    const { director, onBackClick } = this.props;
 
     return (
       <Container className="director-view mt-5">
         <Row>
           <h1>{director.Name}</h1>
-          <p className="director-bio">{director.Bio}</p>
-          <Link to={`/movies/${movie._id}`}>
-            <Button variant="link">Back</Button>
-          </Link>
         </Row>
+        <br />
+        <Row>
+          <h4 className="director-bio">{director.Bio}</h4>
+        </Row>
+        <br />
+        <Button variant="secondary" onClick={() => { onBackClick() }}>Back</Button>
       </Container>
     );
   }
