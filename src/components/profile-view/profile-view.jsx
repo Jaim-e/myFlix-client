@@ -41,9 +41,11 @@ export class ProfileView extends React.Component {
   getUser(token) {
     const username = localStorage.getItem("user");
     axios
-      .get(`https://secure-coast-98530.herokuapp.com/users/${username}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .get(`https://secure-coast-98530.herokuapp.com/users/${username}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      )
       .then(response => {
         console.log(">Testing console<", response);
         this.setState({
@@ -63,10 +65,12 @@ export class ProfileView extends React.Component {
     e.preventDefault();
     /* Send a request to the server for authentication */
     /* then call props.onLoggedIn(data), which provides the username to our parent component (child to parent communication) */
-    axios.post(`https://secure-coast-98530.herokuapp.com/login`, {
-      Username: username,
-      Password: password
-    })
+    axios.post(`https://secure-coast-98530.herokuapp.com/login`,
+      {
+        Username: username,
+        Password: password
+      }
+    )
     .then(response => {
       const data = response.data;
       props.onLoggedIn(data);
@@ -82,14 +86,17 @@ export class ProfileView extends React.Component {
     const username = localStorage.getItem("user");
 
     axios
-      .put(`https://secure-coast-98530.herokuapp.com/users/${username}`, {
-        Username: this.state.Username,
-        Password: this.state.Password,
-        Email: this.state.Email,
-        Birthdate: this.state.Birthdate
-      }, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .put(`https://secure-coast-98530.herokuapp.com/users/${username}`,
+        {
+          Username: this.state.Username,
+          Password: this.state.Password,
+          Email: this.state.Email,
+          Birthdate: this.state.Birthdate
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      )
       .then(response => {
         alert("Profile updated");
         this.updateDetails(response.data);
@@ -119,23 +126,32 @@ export class ProfileView extends React.Component {
     this.state.Birthdate = value;
   }
 
-  removeFavoriteMovie() {
+  removeFromFavorites(movie) {
     const token = localStorage.getItem("token");
-    const username = localStorage.getItem("user");
+    const user = localStorage.getItem("user");
 
     axios
-    .delete(`https://secure-coast-98530.herokuapp.com/users/${username}/movies/${movie._id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then(response => {
-      console.log(response);
-      alert("Movie removed!");
-      this.componentDidMount();
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+      .delete(
+        `https://secure-coast-98530.herokuapp.com/users/${user}/removeFromFav/${movie._id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(response => {
+        console.log(response);
+        alert("Movie removed!");
+        this.componentDidMount();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+
+  refreshPage() {
+    window.location.reload(true);
+  };
+
+
 
   handleDeleteUser() {
     const answer = windows.confirm("Delete your account?");
@@ -144,9 +160,11 @@ export class ProfileView extends React.Component {
       const username = localStorage.getItem("user");
 
       axios
-      .delete(`https://secure-coast-98530.herokuapp.com/users/${username}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .delete(`https://secure-coast-98530.herokuapp.com/users/${username}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      )
       .then(response => {
         console.log(response);
         localStorage.removeItem("user");
