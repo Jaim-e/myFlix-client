@@ -7,19 +7,19 @@ import { Link } from "react-router-dom";
 
 export class GenreView extends React.Component {
   render() {
-    const { genre } = this.props;
+    const { genre, onBackClick } = this.props;
 
     return (
       <Container className="genre-view mt-5">
         <Row>
-          <h1>{genre.Name}</h1>
+          <h1 className="genre-name">{genre.Name}</h1>
         </Row>
+        <br />
         <Row>
-          <p className="genre-description">{genre.Description}</p>
+          <h4 className="genre-description">{genre.Description}</h4>
         </Row>
-        <Link to={`/movies/${movie._id}`}>
-            <Button variant="link">Back</Button>
-        </Link>
+        <br />
+        <Button variant="secondary" onClick={() => { onBackClick() }}>Back</Button>
       </Container>
     );
   }
