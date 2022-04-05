@@ -8,14 +8,9 @@ import { Link } from "react-router-dom";
 
 //import "./profile-view.scss";
 
-function FavoriteMovies({ favoriteMovieList }) {
-  const removeFromFavorites = (id) => {
-    let token = localStorage.getItem("token");
-    let url = `https://secure-coast-98530.herokuapp.com/users/${localStorage.getItem("user")}/movies/${id}`;
-    axios.delete(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-  }
+function FavoriteMovies({ favoriteMovieList, removeFromFavorites }) {
+  console.log(favoriteMovieList)
+
 
   return (
     <Card>
