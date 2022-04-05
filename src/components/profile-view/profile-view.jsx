@@ -19,7 +19,12 @@ export class ProfileView extends React.Component {
       Birthdate: null,
       FavoriteMovies: [],
     };
-  }
+    this.updateDetails = this.updateDetails.bind(this);
+    this.removeFromFavorites = this.removeFromFavorites.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    
+
+  }  
 
   componentDidMount() {
     const accessToken = localStorage.getItem("token");
@@ -63,28 +68,10 @@ export class ProfileView extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    /* Send a request to the server for authentication */
-    /* then call props.onLoggedIn(data), which provides the username to our parent component (child to parent communication) */
-    axios.post(`https://secure-coast-98530.herokuapp.com/login`,
-      {
-        Username: username,
-        Password: password
-      }
-    )
-    .then(response => {
-      const data = response.data;
-      props.onLoggedIn(data);
-    })
-    .catch(e => {
-      console.log("no such user");
-    });
-  };
-
-  handleUpdate(e) {
-    e.preventDefault();
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("user");
-
+    /* Send a request to the server for authentication */
+    /* then call props.onLoggedIn(data), which provides the username to our parent component (child to parent communication) */
     axios
       .put(`https://secure-coast-98530.herokuapp.com/users/${username}`,
         {
@@ -98,16 +85,18 @@ export class ProfileView extends React.Component {
         }
       )
       .then(response => {
-        alert("Profile updated");
         this.updateDetails(response.data);
         localStorage.setItem("user", this.state.Username);
-        console.log(this.state.Username);
-        console.log(this.state.Password);
-        window.open(`/users/${username}`, "_self");
+        alert("Profile updated");
       })
       .catch(function (error) {
         console.log(error);
       });
+    };
+
+  handleUpdate(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   setUsername(value) {
@@ -126,30 +115,23 @@ export class ProfileView extends React.Component {
     this.state.Birthdate = value;
   }
 
-  removeFromFavorites(movie) {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
+  removeFromFavorites(id) {
+    console.log({this: this});
+    let token = localStorage.getItem("token");
+    let url = `https://secure-coast-98530.herokuapp.com/users/${localStorage.getItem("user")}/movies/${id}`;
+    axios.delete(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      console.log("hello", response);
+      response && response.data && this.updateDetails(response.data);
+      alert("Movie removed!");
 
-    axios
-      .delete(
-        `https://secure-coast-98530.herokuapp.com/users/${user}/removeFromFav/${movie._id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then(response => {
-        console.log(response);
-        alert("Movie removed!");
-        this.componentDidMount();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
-
-  refreshPage() {
-    window.location.reload(true);
-  };
 
 
 
@@ -180,6 +162,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { Username, Email, FavoriteMovies} = this.state;
+    console.log("FavMov", FavoriteMovies)
     const favoriteMovieList = this.props.movies.filter((movie) => {
       return FavoriteMovies.includes(movie._id);
     });
@@ -209,12 +192,11 @@ export class ProfileView extends React.Component {
         <Row>
           <Col>
             <Card>
-              <FavoriteMoviesComponent favoriteMovieList={favoriteMovieList} />
+              <FavoriteMoviesComponent favoriteMovieList={favoriteMovieList} removeFromFavorites={this.removeFromFavorites}/>
             </Card>
           </Col>
         </Row>
 
-        
       </Container>
     )
   }
