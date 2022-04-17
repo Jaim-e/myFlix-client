@@ -58,8 +58,6 @@ The application must:
 8. use Bootstrap as a UI library for styling and responsiveness
 9. contain a mix of class components and function components
 
-Besides, the application may be hosted online.
-
 # Stack, Dependencies, Parcel
   
   ## Stack
