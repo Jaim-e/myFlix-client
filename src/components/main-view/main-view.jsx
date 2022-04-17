@@ -1,7 +1,20 @@
 import React from "react";
 import axios from "axios";
 
+import { connect } from "react-redux";
+
 import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
+
+// #0:
+import { setMovies } from "../../actions/actions";
+
+// we haven't written this one yet
+import MoviesList from "..movies-list/movies-list";
+/* #1:
+  The rest of components import statements but without the MovieCard's 
+  because it will be imported and used in the MoviesList component rather
+  than in here. 
+*/
 
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
@@ -13,13 +26,15 @@ import { ProfileView } from "../profile-view/profile-view";
 
 import { Container, Navbar, Nav, Row, Col, Button } from "react-bootstrap";
 
+// #2: export keyword removed from here
 export class MainView extends React.Component {
 
   constructor() {
     super();
-    // Initial state is set to null
+    // [Initial state is set to null]
+    // #3: movies state removed from here:
     this.state = {
-      movies: [],
+    //  movies: [],
       user: null,
     };
   }
@@ -43,10 +58,14 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       })
       .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
+        /*
+          // Assign the result to the state
+          this.setState({
+            movies: response.data
+          });
+        */
+       // #4:
+       this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -74,9 +93,12 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    //const { movies, user } = this.state;
+    // #5: movies is now extrated from this.props rather than from this.state
+    let { movies } = this.props;
+    let { user } = this.state;
 
-    /* If there is not registered user, the RegistrationView is rendered. If there is a user registered, the user details are *passed as a prop to the LoginView */
+    /* If there is not registered user, the RegistrationView is rendered. If there is a user registered, the user details are passed as a prop to the LoginView */
     //if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
 
     /* Before the movies have been loaded */
@@ -118,11 +140,15 @@ export class MainView extends React.Component {
               )
             if (movies.length === 0)
               return <div className="main-view">Loading...</div>;
-            return movies.map(m => (
-              <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
-              </Col>
-            ))
+            /*
+              return movies.map(m => (
+                <Col md={3} key={m._id}>
+                  <MovieCard movie={m} />
+                </Col>
+              ))
+            */
+            // #6:
+            return <MoviesList movies={movies} />
           }} />
 
           {/* REGISTRATION */}
@@ -205,3 +231,11 @@ export class MainView extends React.Component {
     );
   }
 }
+
+// #7:
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+// #8:
+export default connect(mapStateToProps, { setMovies })(MainView);
