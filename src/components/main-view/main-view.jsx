@@ -12,10 +12,9 @@ import MoviesList from "../movies-list/movies-list";
 /* #1:
   The rest of components import statements but without the MovieCard's 
   because it will be imported and used in the MoviesList component rather
-  than in here. 
-*/
-
-/*import { MovieCard } from "../movie-card/movie-card";*/
+  than in here:
+  
+import { MovieCard } from "../movie-card/movie-card"; */
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { RegistrationView } from "../registration-view/registration-view";
