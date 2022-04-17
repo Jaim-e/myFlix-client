@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { connect } from "react-redux";
 
 import UserInfo from "./user-info";
 import FavoriteMoviesComponent from "./favorite-movies";
@@ -8,6 +9,7 @@ import UpdateUser from "./update-user";
 
 import { Container, Row, Col, Card } from "react-bootstrap";
 
+import { setUser } from "../../actions/actions";
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -198,9 +200,15 @@ export class ProfileView extends React.Component {
         </Row>
 
       </Container>
-    )
+    );
   }
 }
+
+let mapStateToProps = state => {
+  return { newUser: state.newUser }
+}
+
+export default connect(mapStateToProps, { setUser })(ProfileView);
 
 ProfileView.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape({
