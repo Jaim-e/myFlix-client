@@ -9,14 +9,14 @@ import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom
 import { setMovies } from "../../actions/actions";
 
 // we haven't written this one yet
-import MoviesList from "..movies-list/movies-list";
+import MoviesList from "../movies-list/movies-list";
 /* #1:
   The rest of components import statements but without the MovieCard's 
   because it will be imported and used in the MoviesList component rather
   than in here. 
 */
 
-import { MovieCard } from "../movie-card/movie-card";
+/*import { MovieCard } from "../movie-card/movie-card";*/
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { RegistrationView } from "../registration-view/registration-view";
@@ -47,7 +47,7 @@ export class MainView extends React.Component {
         user: localStorage.getItem("user")
       }, () => console.log("updated state", this.state));
       this.getMovies(accessToken);
-      console.log("zzzzzzzz");
+      console.log(">Testing console 1<");
     }
   }
 
@@ -167,7 +167,7 @@ export class MainView extends React.Component {
             console.log(">Testing console<", user)
             if (!user)
               return <Redirect to="/" />
-              console.log(">Testing console<");
+              console.log(">Testing console 1<");
             return (
               <Col>
                 <ProfileView movies={movies} />
