@@ -1,5 +1,7 @@
 import React from "react";
 
+import { RegistrationView } from "../registration-view/registration-view";
+
 import { Container, Button } from "react-bootstrap";
 
 
@@ -10,6 +12,7 @@ function UserInfo({ name, email }) {
       <br />
       <p><b>Username: </b>{name}</p>
       <p><b>E-mail: </b>{email}</p>
+      
       <br />
 
       <Button variant="outline-danger" onClick={() => handleDeleteUser()}>Delete Account</Button>
