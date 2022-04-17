@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
 
 // #0:
-import { setMovies } from "../../actions/actions";
+import { setMovies, setUser } from "../../actions/actions";
 
 import MoviesList from "../movies-list/movies-list";
 /* #1:
   The rest of components import statements but without the MovieCard's 
   because it will be imported and used in the MoviesList component rather
   than in here:
-  
+
 import { MovieCard } from "../movie-card/movie-card"; */
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -24,6 +24,8 @@ import { ProfileView } from "../profile-view/profile-view";
 
 import { Container, Navbar, Nav, Row, Col, Button } from "react-bootstrap";
 
+import "./main-view.scss";
+
 // #2: export keyword removed from here
 export class MainView extends React.Component {
 
@@ -31,19 +33,20 @@ export class MainView extends React.Component {
     super();
     // [Initial state is set to null]
     // #3: movies state removed from here:
-    this.state = {
-    //  movies: [],
-      user: null,
-    };
+    /*this.state = {
+      //movies: [],
+      user: null
+    };*/
   }
 
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
     console.log(">Testing console<", accessToken)
     if (accessToken !== null) {
-      this.setState({
+      //this.setState({ user: localStorage.getItem("user") })
+      this.props.setUser({
         user: localStorage.getItem("user")
-      }, () => console.log("updated state", this.state));
+      }); //, () => console.log("updated state", this.state));
       this.getMovies(accessToken);
       console.log(">Testing console 1<");
     }
@@ -56,14 +59,10 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       })
       .then(response => {
-        /*
-          // Assign the result to the state
-          this.setState({
-            movies: response.data
-          });
-        */
-       // #4:
-       this.props.setMovies(response.data);
+        // Assign the result to the state:
+        //this.setState({ movies: response.data });
+        // #4:
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -73,9 +72,10 @@ export class MainView extends React.Component {
   /* When a user successfully logs in, this function updates the 'user' property in state to that particular user */
   onLoggedIn(authData) {
     console.log(authData);
-    this.setState({
-      user: authData.user.Username
-    });
+    //this.setState({ user: authData.user.Username });
+    this.props.setUser(authData.user.Username);
+     // user: authData.user.Username
+
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
     this.getMovies(authData.token);
@@ -85,16 +85,16 @@ export class MainView extends React.Component {
   onLoggedOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    this.setState({
+    //this.setState({ user: null });//
+    this.props.setUser({
       user: null
     });
   }
 
   render() {
     //const { movies, user } = this.state;
-    // #5: movies is now extrated from this.props rather than from this.state
-    let { movies } = this.props;
-    let { user } = this.state;
+    // #5: movies (and user) is now extrated from this.props rather than from this.state
+    let { movies, user } = this.props;
 
     /* If there is not registered user, the RegistrationView is rendered. If there is a user registered, the user details are passed as a prop to the LoginView */
     //if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
@@ -102,7 +102,7 @@ export class MainView extends React.Component {
     /* Before the movies have been loaded */
     return (
       <Router>
-        <Navbar bg="dark" variant="dark" expand="sm">
+        <Navbar sticky="top" bg="dark" variant="dark" expand="sm">
           <Container fluid>
             <Navbar.Brand href="/"><h1>MyFlix</h1></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
@@ -232,8 +232,11 @@ export class MainView extends React.Component {
 
 // #7:
 let mapStateToProps = state => {
-  return { movies: state.movies }
+  return {
+    movies: state.movies,
+    user: state.user
+  }
 }
 
 // #8:
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
